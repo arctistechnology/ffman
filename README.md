@@ -95,7 +95,10 @@ The installer will:
 - Configure and enable systemd service
 - Start FFMan automatically
 
-**Note:** Run as root user or the script will prompt for root access.
+**Note:** Must be run as root user. If not root, use sudo:
+```bash
+sudo bash install.sh
+```
 
 ### Manual Installation
 
