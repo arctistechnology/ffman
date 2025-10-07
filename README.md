@@ -77,6 +77,71 @@ FFMan is compiled with **GLIBC 2.28**. It runs seamlessly on the following Linux
 
 **Note:** Ubuntu 18.04, Debian 9, CentOS 7, and older distributions are not supported as they have GLIBC versions older than 2.28. To check your system's GLIBC version: `ldd --version`
 
+## Installation
+
+Download the latest release and extract to `/opt/ffman`:
+
+```bash
+wget https://github.com/arctistechnology/ffman/releases/download/v1.0.0/ffman-linux-x86_64.tar.gz
+mkdir -p /opt/ffman
+tar -xzf ffman-linux-v1.0.0.tgz -C /opt/ffman
+cd /opt/ffman
+chmod +x app.bin
+```
+
+## Quick Start
+
+```bash
+cd /opt/ffman
+./app.bin --host 0.0.0.0 --port 7080 --loglevel normal
+```
+
+Default credentials: `admin` / `admin`
+
+## Running as Service
+
+Create systemd service file:
+
+```bash
+nano /etc/systemd/system/ffman.service
+```
+
+Add the following content:
+
+```ini
+[Unit]
+Description=FFman Stream Transcoder
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/ffman
+ExecStart=/opt/ffman/app.bin --host 0.0.0.0 --port 7080 --loglevel normal
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start the service:
+
+```bash
+systemctl daemon-reload
+systemctl enable ffman
+systemctl start ffman
+systemctl status ffman
+```
+
+## Command Line Options
+
+```bash
+--host      Host IP address (default: 0.0.0.0)
+--port      Port number (default: 7080)
+--loglevel  Log level: normal/debug (default: normal)
+```
+
 ---
 
 **FFMan** - The professional solution that redefines stream encoding with user-focused design and unlimited flexibility. Manage complex FFmpeg commands with simple clicks, control hundreds of streams from a single panel, and accomplish everything you imagine.
