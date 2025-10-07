@@ -79,9 +79,9 @@ FFMan is compiled with **GLIBC 2.28**. It runs seamlessly on the following Linux
 
 ## Installation
 
-### Automatic Installation (Recommended)
+### Installation or Upgrade (Recommended)
 
-The easiest way to install FFMan is using our installation script:
+The easiest way to install or upgrade FFMan is using our installation script:
 
 ```bash
 wget https://raw.githubusercontent.com/arctistechnology/ffman/main/install.sh
@@ -154,21 +154,6 @@ Default login credentials:
 
 **Important:** Change the default password after first login.
 
-## Updating
-
-To update FFMan to the latest version, simply run the installer again:
-
-```bash
-wget https://raw.githubusercontent.com/arctistechnology/ffman/main/install.sh
-bash install.sh
-```
-
-The installer will:
-- Detect existing installation
-- Preserve your configuration
-- Update only changed files
-- Restart the service if it was running
-
 ## Command Line Options
 
 FFMan supports the following command-line parameters:
@@ -192,11 +177,11 @@ Example:
 Control FFMan service with systemctl:
 
 ```bash
-systemctl start ffman      # Start service
-systemctl stop ffman       # Stop service
-systemctl restart ffman    # Restart service
-systemctl status ffman     # Check status
-journalctl -u ffman -f     # View live logs
+systemctl start ffman
+systemctl stop ffman
+systemctl restart ffman
+systemctl status ffman
+journalctl -u ffman -f
 ```
 
 ## Uninstallation
