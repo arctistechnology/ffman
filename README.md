@@ -79,36 +79,38 @@ FFMan is compiled with **GLIBC 2.28**. It runs seamlessly on the following Linux
 
 ## Installation
 
-Download the latest release and extract to `/opt/ffman`:
+### Automatic Installation (Recommended)
+
+The easiest way to install FFMan is using our installation script:
+
+```bash
+wget https://raw.githubusercontent.com/arctistechnology/ffman/main/install.sh
+bash install.sh
+```
+
+The installer will:
+- Verify system compatibility (GLIBC 2.28+)
+- Download the latest FFMan release
+- Install to `/opt/ffman`
+- Configure and enable systemd service
+- Start FFMan automatically
+
+**Note:** Run as root user or the script will prompt for root access.
+
+### Manual Installation
+
+For manual installation, download and extract the latest release:
 
 ```bash
 wget https://github.com/arctistechnology/ffman/releases/latest/download/ffman-linux-x86_64.tar.gz
-mkdir -p /opt/ffman
-tar -xzf ffman-linux-v1.0.0.tgz -C /opt/ffman
-cd /opt/ffman
-chmod +x app.bin
+tar -xzf ffman-linux-x86_64.tar.gz -C /opt/ffman
+chmod +x /opt/ffman/app.bin
 ```
 
-## Quick Start
+Create the systemd service file:
 
 ```bash
-cd /opt/ffman
-./app.bin --host 0.0.0.0 --port 7080 --loglevel normal
-```
-
-Default credentials: `admin` / `admin`
-
-## Running as Service
-
-Create systemd service file:
-
-```bash
-nano /etc/systemd/system/ffman.service
-```
-
-Add the following content:
-
-```ini
+cat > /etc/systemd/system/ffman.service << EOF
 [Unit]
 Description=FFman Stream Transcoder
 After=network.target
@@ -123,6 +125,7 @@ RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
+EOF
 ```
 
 Enable and start the service:
@@ -134,13 +137,83 @@ systemctl start ffman
 systemctl status ffman
 ```
 
-## Command Line Options
+## Quick Start
+
+Once installed, access the web interface:
+
+```
+http://your-server-ip:7080
+```
+
+Default login credentials:
+- Username: `admin`
+- Password: `admin`
+
+**Important:** Change the default password after first login.
+
+## Updating
+
+To update FFMan to the latest version, simply run the installer again:
 
 ```bash
---host      Host IP address (default: 0.0.0.0)
---port      Port number (default: 7080)
---loglevel  Log level: normal/debug (default: normal)
+wget https://raw.githubusercontent.com/arctistechnology/ffman/main/install.sh
+bash install.sh
 ```
+
+The installer will:
+- Detect existing installation
+- Preserve your configuration
+- Update only changed files
+- Restart the service if it was running
+
+## Command Line Options
+
+FFMan supports the following command-line parameters:
+
+```bash
+./app.bin [options]
+
+Options:
+  --host       IP address to bind (default: 0.0.0.0)
+  --port       Port number (default: 7080)
+  --loglevel   Log verbosity: normal|debug (default: normal)
+```
+
+Example:
+```bash
+./app.bin --host 127.0.0.1 --port 8080 --loglevel debug
+```
+
+## Service Management
+
+Control FFMan service with systemctl:
+
+```bash
+systemctl start ffman      # Start service
+systemctl stop ffman       # Stop service
+systemctl restart ffman    # Restart service
+systemctl status ffman     # Check status
+journalctl -u ffman -f     # View live logs
+```
+
+## Uninstallation
+
+To completely remove FFMan:
+
+```bash
+systemctl stop ffman
+systemctl disable ffman
+rm -rf /opt/ffman
+rm /etc/systemd/system/ffman.service
+systemctl daemon-reload
+```
+
+## Support
+
+For issues, feature requests, or questions:
+- Visit our [GitHub repository](https://github.com/arctistechnology/ffman)
+- Check the [documentation](https://github.com/arctistechnology/ffman/wiki)
+- Open an [issue](https://github.com/arctistechnology/ffman/issues)
 
 ---
 
