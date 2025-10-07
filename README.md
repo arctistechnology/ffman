@@ -82,7 +82,7 @@ FFMan is compiled with **GLIBC 2.28**. It runs seamlessly on the following Linux
 Download the latest release and extract to `/opt/ffman`:
 
 ```bash
-wget https://github.com/arctistechnology/ffman/releases/download/v1.0.0/ffman-linux-x86_64.tar.gz
+wget https://github.com/arctistechnology/ffman/releases/latest/download/ffman-linux-x86_64.tar.gz
 mkdir -p /opt/ffman
 tar -xzf ffman-linux-v1.0.0.tgz -C /opt/ffman
 cd /opt/ffman
